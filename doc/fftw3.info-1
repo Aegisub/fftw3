@@ -1,7 +1,6 @@
-This is /src/aegisub/deps/fftw/doc/fftw3.info, produced by makeinfo
-version 4.8 from /src/aegisub/deps/fftw/doc/fftw3.texi.
+This is fftw3.info, produced by makeinfo version 4.13 from fftw3.texi.
 
-   This manual is for FFTW (version 3.3.2, 28 April 2012).
+This manual is for FFTW (version 3.3.3, 25 November 2012).
 
    Copyright (C) 2003 Matteo Frigo.
 
@@ -34,7 +33,7 @@ FFTW User Manual
 
 Welcome to FFTW, the Fastest Fourier Transform in the West.  FFTW is a
 collection of fast C routines to compute the discrete Fourier transform.
-This manual documents FFTW version 3.3.2.
+This manual documents FFTW version 3.3.3.
 
 * Menu:
 
@@ -59,7 +58,7 @@ File: fftw3.info,  Node: Introduction,  Next: Tutorial,  Prev: Top,  Up: Top
 1 Introduction
 **************
 
-This manual documents version 3.3.2 of FFTW, the _Fastest Fourier
+This manual documents version 3.3.3 of FFTW, the _Fastest Fourier
 Transform in the West_.  FFTW is a comprehensive collection of fast C
 routines for computing the discrete Fourier transform (DFT) and various
 special cases thereof.  
@@ -76,11 +75,11 @@ special cases thereof.
    * FFTW supports the SSE, SSE2, AVX, Altivec, and MIPS PS instruction
            sets.
 
-   * FFTW 3.3.2 includes parallel (multi-threaded) transforms   for
-     shared-memory systems.    FFTW 3.3.2 does not include
-     distributed-memory parallel   transforms, but we plan to implement
-     an MPI version soon.  (Meanwhile,   you can use the MPI
-     implementation from FFTW 2.1.3.)
+   * FFTW includes parallel (multi-threaded) transforms        for
+     shared-memory systems.
+
+   * Starting with version 3.3, FFTW includes distributed-memory
+     parallel        transforms using MPI.
 
    We assume herein that you are familiar with the properties and uses
 of the DFT that are relevant to your application.  Otherwise, see e.g.
@@ -157,21 +156,21 @@ appropriate references.
 
    The rest of this manual is organized as follows.  We first discuss
 the sequential (single-processor) implementation.  We start by
-describing the basic interface/features of FFTW in *Note Tutorial::.
-Next, *Note Other Important Topics:: discusses data alignment (*note
+describing the basic interface/features of FFTW in *note Tutorial::.
+Next, *note Other Important Topics:: discusses data alignment (*note
 SIMD alignment and fftw_malloc::), the storage scheme of
 multi-dimensional arrays (*note Multi-dimensional Array Format::), and
 FFTW's mechanism for storing plans on disk (*note Words of
-Wisdom-Saving Plans::).  Next, *Note FFTW Reference:: provides
+Wisdom-Saving Plans::).  Next, *note FFTW Reference:: provides
 comprehensive documentation of all FFTW's features.  Parallel
-transforms are discussed in their own chapters: *Note Multi-threaded
-FFTW:: and *Note Distributed-memory FFTW with MPI::.  Fortran
-programmers can also use FFTW, as described in *Note Calling FFTW from
-Legacy Fortran:: and *Note Calling FFTW from Modern Fortran::.  *Note
+transforms are discussed in their own chapters: *note Multi-threaded
+FFTW:: and *note Distributed-memory FFTW with MPI::.  Fortran
+programmers can also use FFTW, as described in *note Calling FFTW from
+Legacy Fortran:: and *note Calling FFTW from Modern Fortran::.  *note
 Installation and Customization:: explains how to install FFTW in your
 computer system and how to adapt FFTW to your needs.  License and
-copyright information is given in *Note License and Copyright::.
-Finally, we thank all the people who helped us in *Note
+copyright information is given in *note License and Copyright::.
+Finally, we thank all the people who helped us in *note
 Acknowledgments::.
 
 
@@ -193,9 +192,9 @@ Fourier transform of a single array.  This chapter tells the truth, but
 not the _whole_ truth. Specifically, FFTW implements additional
 routines and flags that are not documented here, although in many cases
 we try to indicate where added capabilities exist.  For more complete
-information, see *Note FFTW Reference::.  (Note that you need to
+information, see *note FFTW Reference::.  (Note that you need to
 compile and install FFTW before you can use it in a program.  For the
-details of the installation, see *Note Installation and
+details of the installation, see *note Installation and
 Customization::.)
 
    We recommend that you read this tutorial in order.(1)  At the least,
@@ -203,7 +202,7 @@ read the first section (*note Complex One-Dimensional DFTs::) before
 reading any of the others, even if your main interest lies in one of
 the other transform types.
 
-   Users of FFTW version 2 and earlier may also want to read *Note
+   Users of FFTW version 2 and earlier may also want to read *note
 Upgrading from FFTW version 2::.
 
    ---------- Footnotes ----------
@@ -316,7 +315,7 @@ with `fftw_free()'.  Do not use `free()' or, heaven forbid, `delete'.
 
    FFTW computes an _unnormalized_ DFT.  Thus, computing a forward
 followed by a backward transform (or vice versa) results in the original
-array scaled by `n'.  For the definition of the DFT, see *Note What
+array scaled by `n'.  For the definition of the DFT, see *note What
 FFTW Really Computes::.  
 
    If you have a C compiler, such as `gcc', that supports the C99
@@ -334,7 +333,7 @@ be usable via a typecast.)
    Many more flags exist besides `FFTW_MEASURE' and `FFTW_ESTIMATE'.
 For example, use `FFTW_PATIENT' if you're willing to wait even longer
 for a possibly even faster plan (*note FFTW Reference::).  You can also
-save plans for future use, as described by *Note Words of Wisdom-Saving
+save plans for future use, as described by *note Words of Wisdom-Saving
 Plans::.
 
 
@@ -363,7 +362,7 @@ dimensionality.  The 2d and 3d routines have the following signature:
 transforms and `n0' by `n1' by `n2' 3d transforms, respectively.  All
 of these transforms operate on contiguous arrays in the C-standard
 "row-major" order, so that the last dimension has the fastest-varying
-index in the array.  This layout is described further in *Note
+index in the array.  This layout is described further in *note
 Multi-dimensional Array Format::.
 
    FFTW can also compute transforms of higher dimensionality.  In order
@@ -402,7 +401,7 @@ describe in this tutorial, but there are also the advanced and guru
 interfaces, which allow one to efficiently combine multiple/strided
 transforms into a single FFTW plan, transform a subset of a larger
 multi-dimensional array, and/or to handle more general complex-number
-formats.  For more information, see *Note FFTW Reference::.
+formats.  For more information, see *note FFTW Reference::.
 
    ---------- Footnotes ----------
 
@@ -521,16 +520,22 @@ slightly over half of the output of the corresponding complex DFT.
 (The division is rounded down.)  The ordering of the data is otherwise
 exactly the same as in the complex-DFT case.
 
-   Since the complex data is slightly larger than the real data, some
-complications arise for in-place transforms.  In this case, the final
-dimension of the real data must be padded with extra values to
-accommodate the size of the complex data--two values if the last
-dimension is even and one if it is odd.  That is, the last dimension of
-the real data must physically contain 2 * (n[d-1]/2+1) `double' values
-(exactly enough to hold the complex data).  This physical array size
-does not, however, change the _logical_ array size--only n[d-1] values
-are actually stored in the last dimension, and n[d-1] is the last
-dimension passed to the plan-creation routine.
+   For out-of-place transforms, this is the end of the story: the real
+data is stored as a row-major array of size n[0] x n[1] x n[2] x ... x
+n[d-1]  and the complex data is stored as a row-major array of size
+n[0] x n[1] x n[2] x ... x (n[d-1]/2 + 1) .
+
+   For in-place transforms, however, extra padding of the real-data
+array is necessary because the complex array is larger than the real
+array, and the two arrays share the same memory locations.  Thus, for
+in-place transforms, the final dimension of the real-data array must be
+padded with extra values to accommodate the size of the complex
+data--two values if the last dimension is even and one if it is odd.  That
+is, the last dimension of the real data must physically contain 2 *
+(n[d-1]/2+1) `double' values (exactly enough to hold the complex data).
+This physical array size does not, however, change the _logical_ array
+size--only n[d-1] values are actually stored in the last dimension, and
+n[d-1] is the last dimension passed to the plan-creation routine.
 
    For example, consider the transform of a two-dimensional real array
 of size `n0' by `n1'.  The output of the r2c transform is a
@@ -754,7 +759,7 @@ correspond to N=0, and so are _not defined_ (the planner will return
 `NULL').  Otherwise, any positive `n' is supported.
 
    For the precise mathematical definitions of these transforms as used
-by FFTW, see *Note What FFTW Really Computes::.  (For people accustomed
+by FFTW, see *note What FFTW Really Computes::.  (For people accustomed
 to the DCT/DST, FFTW's definitions have a coefficient of 2 in front of
 the cos/sin functions so that they correspond precisely to an even/odd
 DFT of size N.  Some authors also include additional multiplicative
@@ -847,7 +852,7 @@ necessary, with at most `rank-1' post-processing passes [see e.g. H.
 Hao and R. N. Bracewell, Proc. IEEE 75, 264-266 (1987)].
 
    For the precise mathematical definition of the DHT as used by FFTW,
-see *Note What FFTW Really Computes::.
+see *note What FFTW Really Computes::.
 
    ---------- Footnotes ----------
 
@@ -1140,7 +1145,7 @@ be forgotten and its associated memory freed by calling:
      void fftw_forget_wisdom(void);
    
    Wisdom can be exported to a file, a string, or any other medium.
-For details, see *Note Wisdom::.
+For details, see *note Wisdom::.
 
 
 File: fftw3.info,  Node: Caveats in Using Wisdom,  Prev: Words of Wisdom-Saving Plans,  Up: Other Important Topics
@@ -1361,7 +1366,7 @@ desired.
 new-array execute interface.  *Note New-array Execute Functions::.
 
    `fftw_execute' (and equivalents) is the only function in FFTW
-guaranteed to be thread-safe; see *Note Thread safety::.
+guaranteed to be thread-safe; see *note Thread safety::.
 
    This function:
      void fftw_destroy_plan(fftw_plan plan);
@@ -1506,7 +1511,7 @@ Arguments
           are arbitrary.  Other sizes are computed by means of a slow,
           general-purpose algorithm (which nevertheless retains O(n log
           n)  performance even for prime sizes).  It is possible to
-          customize FFTW for different array sizes; see *Note
+          customize FFTW for different array sizes; see *note
           Installation and Customization::.  Transforms whose sizes are
           powers of 2 are especially fast.
 
@@ -1525,13 +1530,13 @@ Arguments
      `FFTW_BACKWARD').
 
    * `flags' is a bitwise OR (`|') of zero or more planner flags, as
-     defined in *Note Planner Flags::.
+     defined in *note Planner Flags::.
 
 
    FFTW computes an unnormalized transform: computing a forward
 followed by a backward transform (or vice versa) will result in the
 original data multiplied by the size of the transform (the product of
-the dimensions).  For more information, see *Note What FFTW Really
+the dimensions).  For more information, see *note What FFTW Really
 Computes::.
 
 
@@ -1690,7 +1695,7 @@ Arguments
    * `n0', `n1', `n2', or `n[0..rank-1]', (as appropriate for each
      routine) specify the size of the transform dimensions.  They can
      be any positive integer.  This is different in general from the
-     _physical_ array dimensions, which are described in *Note
+     _physical_ array dimensions, which are described in *note
      Real-data DFT Array Format::.
 
         - FFTW is best at handling sizes of the form 2^a 3^b 5^c 7^d
@@ -1698,7 +1703,7 @@ Arguments
           are arbitrary.  Other sizes are computed by means of a slow,
           general-purpose algorithm (which nevertheless retains O(n log
           n)  performance even for prime sizes).  (It is possible to
-          customize FFTW for different array sizes; see *Note
+          customize FFTW for different array sizes; see *note
           Installation and Customization::.)  Transforms whose sizes
           are powers of 2 are especially fast, and it is generally
           beneficial for the _last_ dimension of an r2c/c2r transform
@@ -1710,10 +1715,10 @@ Arguments
      used in the flags.  (The arrays need not be initialized, but they
      must be allocated.)  For an in-place transform, it is important to
      remember that the real array will require padding, described in
-     *Note Real-data DFT Array Format::.  
+     *note Real-data DFT Array Format::.  
 
    * `flags' is a bitwise OR (`|') of zero or more planner flags, as
-     defined in *Note Planner Flags::.
+     defined in *note Planner Flags::.
 
 
    The inverse transforms, taking complex input (storing the
@@ -1742,7 +1747,7 @@ multiplied by the size of the transform (the product of the logical
 dimensions).  An r2c transform produces the same output as a
 `FFTW_FORWARD' complex DFT of the same input, and a c2r transform is
 correspondingly equivalent to `FFTW_BACKWARD'.  For more information,
-see *Note What FFTW Really Computes::.
+see *note What FFTW Really Computes::.
 
 
 File: fftw3.info,  Node: Real-data DFT Array Format,  Next: Real-to-Real Transforms,  Prev: Real-data DFTs,  Up: Basic Interface
@@ -1844,7 +1849,7 @@ Arguments
           of a slow, general-purpose algorithm (which nevertheless
           retains O(n log n)  performance even for prime sizes).  (It
           is possible to customize FFTW for different array sizes; see
-          *Note Installation and Customization::.)  Transforms whose
+          *note Installation and Customization::.)  Transforms whose
           sizes are powers of 2 are especially fast.
 
         - For a `REDFT00' or `RODFT00' transform kind in a dimension of
@@ -1859,13 +1864,13 @@ Arguments
 
    * `kind', or `kind0'/`kind1'/`kind2', or `kind[rank]', is the kind
      of r2r transform used for the corresponding dimension.  The valid
-     kind constants are described in *Note Real-to-Real Transform
+     kind constants are described in *note Real-to-Real Transform
      Kinds::.  In a multi-dimensional transform, what is computed is
      the separable product formed by taking each transform kind along
      the corresponding dimension, one dimension after another.
 
    * `flags' is a bitwise OR (`|') of zero or more planner flags, as
-     defined in *Note Planner Flags::.
+     defined in *note Planner Flags::.
 
 
 
@@ -1876,8 +1881,8 @@ File: fftw3.info,  Node: Real-to-Real Transform Kinds,  Prev: Real-to-Real Trans
 
 FFTW currently supports 11 different r2r transform kinds, specified by
 one of the constants below.  For the precise definitions of these
-transforms, see *Note What FFTW Really Computes::.  For a more
-colloquial introduction to these transform kinds, see *Note More DFTs
+transforms, see *note What FFTW Really Computes::.  For a more
+colloquial introduction to these transform kinds, see *note More DFTs
 of Real Data::.
 
    For dimension of size `n', there is a corresponding "logical"
@@ -2061,7 +2066,7 @@ for the real array are in units of `double', and for the complex array
 are in units of `fftw_complex'.
 
    If an `nembed' parameter is `NULL', it is interpreted as what it
-would be in the basic interface, as described in *Note Real-data DFT
+would be in the basic interface, as described in *note Real-data DFT
 Array Format::.  That is, for the complex array the size is assumed to
 be the same as `n', but with the last dimension cut roughly in half.
 For the real array, the size is assumed to be `n' if the transform is
@@ -2136,7 +2141,7 @@ The guru interface supports two representations of complex numbers,
 which we call the interleaved and the split format.
 
    The "interleaved" format is the same one used by the basic and
-advanced interfaces, and it is documented in *Note Complex numbers::.
+advanced interfaces, and it is documented in *note Complex numbers::.
 In the interleaved format, you provide pointers to the real part of a
 complex number, and the imaginary part understood to be stored in the
 next memory location.  
@@ -2231,7 +2236,7 @@ should point to `fftw_iodim' arrays of length `rank' and
 `howmany_rank', respectively.
 
    `flags' is a bitwise OR (`|') of zero or more planner flags, as
-defined in *Note Planner Flags::.
+defined in *note Planner Flags::.
 
    In the `fftw_plan_guru_dft' function, the pointers `in' and `out'
 point to the interleaved input and output arrays, respectively.  The
@@ -2254,7 +2259,7 @@ are:
 expressed in units of `double'.  For a contiguous `fftw_complex' array,
 the overall stride of the transform should be 2, the distance between
 consecutive real parts or between consecutive imaginary parts; see
-*Note Guru vector and transform sizes::.  Note that the dimension
+*note Guru vector and transform sizes::.  Note that the dimension
 strides are applied equally to the real and imaginary parts; real and
 imaginary arrays with different strides are not supported.
 
@@ -2315,8 +2320,8 @@ rounded down).  The strides, on the other hand, are taken to be exactly
 as specified.  It is up to the user to specify the strides
 appropriately for the peculiar dimensions of the data, and we do not
 guarantee that the planner will succeed (return non-`NULL') for any
-dimensions other than those described in *Note Real-data DFT Array
-Format:: and generalized in *Note Advanced Real-data DFTs::.  (That is,
+dimensions other than those described in *note Real-data DFT Array
+Format:: and generalized in *note Advanced Real-data DFTs::.  (That is,
 for an in-place transform, each individual dimension should be able to
 operate in place.)  
 
@@ -2329,7 +2334,7 @@ transform.   (In-place transforms where `in' and `io' or `ii' and `out'
 are the same are not currently supported.)
 
    `flags' is a bitwise OR (`|') of zero or more planner flags, as
-defined in *Note Planner Flags::.
+defined in *note Planner Flags::.
 
    In-place transforms of rank greater than 1 are currently only
 supported for interleaved arrays.  For split arrays, the planner will
@@ -2356,14 +2361,14 @@ multi-dimensional vector (loop) of dimensions (`howmany_rank',
 
    The transform kind of each dimension is given by the `kind'
 parameter, which should point to an array of length `rank'.  Valid
-`fftw_r2r_kind' constants are given in *Note Real-to-Real Transform
+`fftw_r2r_kind' constants are given in *note Real-to-Real Transform
 Kinds::.
 
    `in' and `out' point to the real input and output arrays; they may
 be the same, indicating an in-place transform.
 
    `flags' is a bitwise OR (`|') of zero or more planner flags, as
-defined in *Note Planner Flags::.
+defined in *note Planner Flags::.
 
 
 File: fftw3.info,  Node: 64-bit Guru Interface,  Prev: Guru Real-to-real Transforms,  Up: Guru Interface
@@ -2423,7 +2428,7 @@ File: fftw3.info,  Node: New-array Execute Functions,  Next: Wisdom,  Prev: Guru
 ===============================
 
 Normally, one executes a plan for the arrays with which the plan was
-created, by calling `fftw_execute(plan)' as described in *Note Using
+created, by calling `fftw_execute(plan)' as described in *note Using
 Plans::.  However, it is possible for sophisticated users to apply a
 given plan to a _different_ array using the "new-array execute"
 functions detailed below, provided that the following conditions are
@@ -2750,7 +2755,7 @@ where N = 2(n-1).
    The proper definition of even symmetry for `REDFT10', `REDFT01', and
 `REDFT11' transforms is somewhat more intricate because of the shifts
 by 1/2 of the input and/or output, although the corresponding boundary
-conditions are given in *Note Real even/odd DFTs (cosine/sine
+conditions are given in *note Real even/odd DFTs (cosine/sine
 transforms)::.  Because of the even symmetry, however, the sine terms
 in the DFT all cancel and the remaining cosine terms are written
 explicitly below.  This formulation often leads people to call such a
@@ -2826,7 +2831,7 @@ actually stored (the j=0 element is zero), where N = 2(n+1).
    The proper definition of odd symmetry for `RODFT10', `RODFT01', and
 `RODFT11' transforms is somewhat more intricate because of the shifts
 by 1/2 of the input and/or output, although the corresponding boundary
-conditions are given in *Note Real even/odd DFTs (cosine/sine
+conditions are given in *note Real even/odd DFTs (cosine/sine
 transforms)::.  Because of the odd symmetry, however, the cosine terms
 in the DFT all cancel and the remaining sine terms are written
 explicitly below.  This formulation often leads people to call such a
@@ -2918,7 +2923,7 @@ symmetry, we only store the k[d-1] = 0...n[d-1]/2 elements of the
 _last_ dimension (division by 2 is rounded down).  (We could instead
 have cut any other dimension in half, but the last dimension proved
 computationally convenient.)  This results in the peculiar array format
-described in more detail by *Note Real-data DFT Array Format::.
+described in more detail by *note Real-data DFT Array Format::.
 
    The multi-dimensional c2r transform is simply the unnormalized
 inverse of the r2c transform.  i.e. it is the same as FFTW's complex
@@ -2931,10 +2936,10 @@ along each dimension, as computed by FFTW, is not always the same thing
 as the usual multi-dimensional transform.  A multi-dimensional `R2HC'
 (or `HC2R') transform is not identical to the multi-dimensional DFT,
 requiring some post-processing to combine the requisite real and
-imaginary parts, as was described in *Note The Halfcomplex-format
+imaginary parts, as was described in *note The Halfcomplex-format
 DFT::.  Likewise, FFTW's multidimensional `FFTW_DHT' r2r transform is
 not the same thing as the logical multi-dimensional discrete Hartley
-transform defined in the literature, as discussed in *Note The Discrete
+transform defined in the literature, as discussed in *note The Discrete
 Hartley Transform::.
 
 
@@ -3051,13 +3056,13 @@ subsequent plans.
    With OpenMP, to configure FFTW to use all of the currently running
 OpenMP threads (set by `omp_set_num_threads(nthreads)' or by the
 `OMP_NUM_THREADS' environment variable), you can do:
-`fftw_plan_with_nthreads(omp_get_num_threads())'. (The `omp_' OpenMP
+`fftw_plan_with_nthreads(omp_get_max_threads())'. (The `omp_' OpenMP
 functions are declared via `#include <omp.h>'.)
 
    Given a plan, you then execute it as usual with
 `fftw_execute(plan)', and the execution will use the number of threads
 specified when the plan was created.  When done, you destroy it as
-usual with `fftw_destroy_plan'.  As described in *Note Thread safety::,
+usual with `fftw_destroy_plan'.  As described in *note Thread safety::,
 plan _execution_ is thread-safe, but plan creation and destruction are
 _not_: you should create/destroy plans only from a single thread, but
 can safely execute multiple plans in parallel.
@@ -3448,7 +3453,7 @@ alignment).  It might seem that this should always be equal to
 `local_n0 * n1', but this is _not_ the case.  FFTW's distributed FFT
 algorithms require data redistributions at intermediate stages of the
 transform, and in some circumstances this may require slightly larger
-local storage.  This is discussed in more detail below, under *Note
+local storage.  This is discussed in more detail below, under *note
 Load balancing::.  
 
    The advanced-interface `local_size' function for multidimensional
@@ -3685,7 +3690,7 @@ to the MPI complex DFTs or the serial r2c/c2r transforms), are:
 
    For example suppose we are performing an out-of-place r2c transform
 of L x M x N  real data [padded to L x M x 2(N/2+1) ], resulting in L x
-M x N/2+1  complex data.  Similar to the example in *Note 2d MPI
+M x N/2+1  complex data.  Similar to the example in *note 2d MPI
 example::, we might do something like:
 
      #include <fftw3-mpi.h>
@@ -4144,7 +4149,7 @@ File: fftw3.info,  Node: FFTW MPI Reference,  Next: FFTW MPI Fortran Interface, 
 =======================
 
 This chapter provides a complete reference to all FFTW MPI functions,
-datatypes, and constants.  See also *Note FFTW Reference:: for
+datatypes, and constants.  See also *note FFTW Reference:: for
 information on functions and types in common with the serial interface.
 
 * Menu:
@@ -4563,12 +4568,12 @@ File: fftw3.info,  Node: FFTW MPI Fortran Interface,  Prev: FFTW MPI Reference, 
 
 The FFTW MPI interface is callable from modern Fortran compilers
 supporting the Fortran 2003 `iso_c_binding' standard for calling C
-functions.  As described in *Note Calling FFTW from Modern Fortran::,
+functions.  As described in *note Calling FFTW from Modern Fortran::,
 this means that you can directly call FFTW's C interface from Fortran
 with only minor changes in syntax.  There are, however, a few things
 specific to the MPI interface to keep in mind:
 
-   * Instead of including `fftw3.f03' as in *Note Overview of Fortran
+   * Instead of including `fftw3.f03' as in *note Overview of Fortran
      interface::, you should `include 'fftw3-mpi.f03'' (after `use,
      intrinsic :: iso_c_binding' as before).  The `fftw3-mpi.f03' file
      includes `fftw3.f03', so you should _not_ `include' them both
@@ -4597,7 +4602,7 @@ specific to the MPI interface to keep in mind:
      much space to allocate, and this may be _larger_ than the local
      portion of the array (*note MPI Data Distribution::), you should
      _always_ allocate your arrays dynamically using FFTW's allocation
-     routines as described in *Note Allocating aligned memory in
+     routines as described in *note Allocating aligned memory in
      Fortran::.  (Coincidentally, this also provides the best
      performance by guaranteeding proper data alignment.)
 
@@ -4932,7 +4937,7 @@ interface and Fortran:
 
    * The C integer types `int' and `unsigned' (used for planner flags)
      become `integer(C_INT)'.  The C integer type `ptrdiff_t' (e.g. in
-     the *Note 64-bit Guru Interface::) becomes `integer(C_INTPTR_T)',
+     the *note 64-bit Guru Interface::) becomes `integer(C_INTPTR_T)',
      and `size_t' (in `fftw_malloc' etc.) becomes `integer(C_SIZE_T)'.
 
    * The `fftw_r2r_kind' type (*note Real-to-Real Transform Kinds::)
@@ -4965,7 +4970,7 @@ interface and Fortran:
      its components are of type `integer(C_INTPTR_T)'.
 
    * Using the wisdom import/export functions from Fortran is a bit
-     tricky, and is discussed in *Note Accessing the wisdom API from
+     tricky, and is discussed in *note Accessing the wisdom API from
      Fortran::.  In brief, the `FILE *' arguments map to `type(C_PTR)',
      `const char *' to `character(C_CHAR), dimension(*), intent(in)'
      (null-terminated!), and the generic read-char/write-char functions
@@ -5009,7 +5014,7 @@ does nothing to the arrays.
 
    There are various workarounds to this, but the safest and simplest
 thing is to not use `fftw_execute' in Fortran.  Instead, use the
-functions described in *Note New-array Execute Functions::, which take
+functions described in *note New-array Execute Functions::, which take
 the input/output arrays as explicit arguments.  For example, if the
 plan is for a complex-data DFT and was created for the arrays `in' and
 `out', you would do:
@@ -5111,7 +5116,7 @@ the following technique:
        _...use arr and arr(i,j,k) as usual..._
        call fftw_free(p)
 
-   See *Note Reversing array dimensions:: for an example allocating a
+   See *note Reversing array dimensions:: for an example allocating a
 single array and associating both real and complex array pointers with
 it, for in-place real-to-complex transforms.
 
@@ -5121,7 +5126,7 @@ File: fftw3.info,  Node: Accessing the wisdom API from Fortran,  Next: Defining 
 7.6 Accessing the wisdom API from Fortran
 =========================================
 
-As explained in *Note Words of Wisdom-Saving Plans::, FFTW provides a
+As explained in *note Words of Wisdom-Saving Plans::, FFTW provides a
 "wisdom" API for saving plans to disk so that they can be recreated
 quickly.  The C API for exporting (*note Wisdom Export::) and importing
 (*note Wisdom Import::) wisdom is somewhat tricky to use from Fortran,
@@ -5372,7 +5377,7 @@ same, with the following exceptions:
      for multi-dimensional real-complex transforms, discussed below.
 
    * Wisdom import and export is somewhat more tricky because one cannot
-     easily pass files or strings between C and Fortran; see *Note
+     easily pass files or strings between C and Fortran; see *note
      Wisdom of Fortran?::.
 
    * Legacy Fortran cannot use the `fftw_malloc' dynamic-allocation
@@ -5463,7 +5468,7 @@ that it does nothing.
 
    There are various workarounds to this, but the safest and simplest
 thing is to not use `dfftw_execute' in Fortran.  Instead, use the
-functions described in *Note New-array Execute Functions::, which take
+functions described in *note New-array Execute Functions::, which take
 the input/output arrays as explicit arguments.  For example, if the
 plan is for a complex-data DFT and was created for the arrays `in' and
 `out', you would do:
@@ -5598,7 +5603,7 @@ File: fftw3.info,  Node: Wisdom of Fortran?,  Prev: Fortran Examples,  Up: Calli
 
 In this section, we discuss how one can import/export FFTW wisdom
 (saved plans) to/from a Fortran program; we assume that the reader is
-already familiar with wisdom, as described in *Note Words of
+already familiar with wisdom, as described in *note Words of
 Wisdom-Saving Plans::.
 
    The basic problem is that is difficult to (portably) pass files and
